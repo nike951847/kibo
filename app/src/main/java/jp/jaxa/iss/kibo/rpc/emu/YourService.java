@@ -19,13 +19,13 @@ public class YourService extends KiboRpcService {
     @Override
     protected void runPlan1() {
         api.judgeSendStart();
-        Log.d("Timer","____");
+        Log.d("Timer","____moveToWrapper(11.5, -5.7, 4.5, 0, 0, 0, 1);start");
         moveToWrapper(11.5, -5.7, 4.5, 0, 0, 0, 1);
-        Log.d("Timer","____");
+        Log.d("Timer","____moveToWrapper(11.5, -5.7, 4.5, 0, 0, 0, 1);finish");
         waiting();
-        Log.d("Timer","____");
+        Log.d("Timer","____getQRstart");
         getQR(0);
-        Log.d("Timer","____");
+        Log.d("Timer","____getQRfinish");
         waiting();
         Log.d("Timer","____");
         moveToWrapper(11,-6, 5.55, 0, -0.7071068, 0, 0.7071068);
@@ -82,7 +82,6 @@ public class YourService extends KiboRpcService {
         int loopCounter = 0;
         while (!result.hasSucceeded() || loopCounter < LOOP_MAX) {
             ++loopCounter;
-
             try{
                 Thread.sleep(300);
 
@@ -114,22 +113,16 @@ public class YourService extends KiboRpcService {
                     rgbLuminanceSource));
             Log.d("tagg", "con2");
             QRCodeReader qrCodeReader = new QRCodeReader();
-            Log.d("tagg", "con3");
             com.google.zxing.Result result = qrCodeReader.decode(binaryBitmap);
-            Log.d("tagg", "con4");
             if(result.getNumBits()==0){
-                Log.d("tagg", "con11null");
             }
 
             else if(result.getNumBits()!=0){
-                Log.d("tagg", "con12some");
             }
             else {
-                Log.d("tagg", "con13wt");
             }
             return result.getText();
         } catch (Exception e) {
-            Log.e("emuu","confail");
             return null;
 
         }
