@@ -18,50 +18,40 @@ import java.lang.String;
 public class YourService extends KiboRpcService {
     @Override
     protected void runPlan1() {
-        if(!OpenCVLoader.initDebug()){
-            Log.e("ERROR","UNLOADOPENCV");
-        }
-        else{
-            Log.e("ERROR","UNLOADOPENCV");
-        }
-        String tag = "funkingemu";
-        String w =tag;
         api.judgeSendStart();
+        Log.d("Timer","____");
         moveToWrapper(11.5, -5.7, 4.5, 0, 0, 0, 1);
+        Log.d("Timer","____");
+        waiting();
+        Log.d("Timer","____");
         getQR(0);
+        Log.d("Timer","____");
         waiting();
+        Log.d("Timer","____");
         moveToWrapper(11,-6, 5.55, 0, -0.7071068, 0, 0.7071068);
+        Log.d("Timer","____");
         getQR(1);
+        Log.d("Timer","____");
         waiting();
-        moveToWrapper(11,-5.5, 4.33, 0, 0.7071068, 0, 0.7071068);
-        getQR(2);
-        waiting();
-        moveToWrapper(11, -6, 5.55, 0, -0.7071068, 0, 0.7071068);
+        Log.d("Timer","____");
+        moveToWrapper(11,-5.5, 4.33, 0, -0.7071068, 0, 0.7071068);
+        Log.d("Timer","____");
+        getQRD(2);
+        moveToWrapper(10.30,-7.5, 4.7,0, 0, 1, 0);
+        Log.d("Timer","____");
         waiting();
         getQR(3);
-        moveToWrapper(11, -6, 5.55, 0, -0.7071068, 0, 0.7071068);
-        api.judgeSendFinishSimulation();
-        /*
-        if(emu!=null){
-            Log.d("YEEEE", emu);
-        }
+        Log.d("Timer","____");
+        moveToWrapper(11.5, -8, 5,0, 0, 0, 1);
+        Log.d("Timer","____");
         waiting();
-        moveToWrapper(11,-5.5, 4.33, 0, 0.7071068, 0, 0.7071068);
-
-        if(emu!=null){
-            Log.d("YEEEE", emu);
-        }
- /*
-        String[] xpoz =xposition.split(",");
-
-        xpos = Double.parseDouble(xpoz[1]);*/
-
-        //api.judgeSendDiscoveredQR(0, xposition);
-        /*
-        moveToWrapper(11, -6, 5.55, 0, -0.7071068, 0, 0.7071068);
-        //y position
-        mat = api.getMatNavCam();
-        yposition = qrCodeDetector.detectAndDecode(mat);
+        getQR(4);
+        moveToWrapper(11, -7.7, 5.55 , 0, -0.7071068, 0, 0.7071068);
+        waiting();
+        getQR(5);
+        moveToWrapper(11, -7.7, 5.55 , 0, -0.7071068, 0, 0.7071068);
+        api.judgeSendFinishSimulation();
+      /*
 
         String[] ypoz =xposition.split(",");
         double ypos = Double.parseDouble(xpoz[1]);
@@ -94,17 +84,15 @@ public class YourService extends KiboRpcService {
             ++loopCounter;
 
             try{
-                Thread.sleep(200);
+                Thread.sleep(300);
 
             }catch (Exception e){
                 Log.d("TAG" ,"moveToWrapper: Something");
             }
+
             result = api.moveTo(point, quaternion, true);
             waiting();
-           /* String w = qrCodeDetector.detectAndDecode(api.getMatNavCam());
-            if(w!=null){Log.d("tag", w);}
-           Log.d("eeeeeeeeeeeeeeeeeeeeeeeee", "fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        */}
+        }
     }
     private void waiting(){
         try{
@@ -167,6 +155,31 @@ public class YourService extends KiboRpcService {
                 Log.e("tagerror", "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
             }
         }
-    return getQRString;
-    }}
+        return getQRString;
+    }
+    private String getQRD(int number) {
+        String tag = "getQR:";
+        Log.d("getQR:", number + "part");
+        waiting();
+        String getQRString = convert(api.getBitmapNavCam());
+        if (getQRString == null) {
+            Log.d(tag, "nope");
+            getQRString = convert(api.getBitmapDockCam());
+            if (getQRString != null) {
+
+                api.judgeSendDiscoveredQR(number, getQRString);
+            }
+
+        } else if (getQRString != null) {
+            try {
+                Log.d(tag, getQRString);
+                api.judgeSendDiscoveredQR(number, getQRString);
+            } catch (Exception e) {
+                Log.e("tagerror", "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+            }
+        }
+        return getQRString;
+    }
+
+}
 
